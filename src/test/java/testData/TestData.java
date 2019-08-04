@@ -5,8 +5,8 @@ public interface TestData {
     //Expected Results
     String[][] expectedListOfDoorbellsNamesAndPrices = {
             {"Door View Cam", "$199.00"},
-            {"Video Doorbell", "$69.99"},
-            {"Video Doorbell 2", "$139.00"},
+            {"Video Doorbell", "$99.99"},
+            {"Video Doorbell 2", "$199.00"},
             {"Video Doorbell Pro", "$169.00"},
             {"Video Doorbell Elite", "$499.00"}
     };
