@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.*;
 import testData.TestData;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -27,11 +28,11 @@ public class CartPageTests extends TestBase {
     String actualDoorbellPrice;
     String actualDoorbellName;
     int actualItemsQuantity;
-    double actualTotalPrice;
+    BigDecimal actualTotalPrice;
     String expectedDoorbellName;
     String expectedDoorbellPrice;
     int expectedItemsQuantity;
-    double expectedTotalPrice;
+    BigDecimal expectedTotalPrice;
     WebElement viewCartButton;
 
     @Test
@@ -46,7 +47,7 @@ public class CartPageTests extends TestBase {
         expectedDoorbellName = TestData.expectedListOfDoorbellsNamesAndPrices[videoDoorbellsPage.locationOfRandomItem][TestData.NAME_IDENTIFIER];
         expectedDoorbellPrice = TestData.expectedListOfDoorbellsNamesAndPrices[videoDoorbellsPage.locationOfRandomItem][TestData.PRICE_IDENTIFIER];
         expectedItemsQuantity = videoDoorbellPage.itemsAmount;
-        expectedTotalPrice = videoDoorbellPage.itemsAmount * Double.parseDouble(expectedDoorbellPrice.substring(1));
+        expectedTotalPrice = new BigDecimal(videoDoorbellPage.itemsAmount * Double.parseDouble(expectedDoorbellPrice.substring(1))).setScale(2, BigDecimal.ROUND_HALF_UP);
 
         //Step 1: Open page with doorbells
         mainPage.openCategoryPage(mainPage.productsButtonXpath, mainPage.videoDoorbellsXpath);
@@ -90,7 +91,7 @@ public class CartPageTests extends TestBase {
         actualDoorbellName = actualListOfChosenItems.get(1).getText().substring(0, actualListOfChosenItems.get(1).getText().indexOf("\n"));
         actualDoorbellPrice = actualListOfChosenItems.get(2).getText();
         actualItemsQuantity = Integer.parseInt(actualListOfChosenItems.get(3).findElement(By.tagName(TestData.INPUT_TAG_NAME)).getAttribute(TestData.VALUE_ATTRIBUTE));
-        actualTotalPrice = Double.parseDouble(actualListOfChosenItems.get(4).findElement(By.tagName(TestData.DIV_TAG_NAME)).getText().substring(1).replace(",", ""));
+        actualTotalPrice = new BigDecimal(actualListOfChosenItems.get(4).findElement(By.tagName(TestData.DIV_TAG_NAME)).getText().substring(1).replace(",", ""));
 
         Assert.assertEquals(actualDoorbellName, expectedDoorbellName, TestData.nameOfProductIsDifferentThanExpected);
         Assert.assertEquals(actualDoorbellPrice, expectedDoorbellPrice, TestData.priceOfProductIsDifferentThanExpected);
